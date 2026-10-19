@@ -30,3 +30,36 @@
 .pt-safe {
   padding-top: env(safe-area-inset-top, 12px);
 }
+
+/* Mobile viewport + bottom navigation safe-area handling.
+   Keep the game inside the visible iOS viewport and preserve full-height tap targets
+   above the home-indicator / browser-bar area. */
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  margin: 0;
+}
+
+.game-viewport {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+}
+
+.bottom-navigation {
+  box-sizing: border-box;
+  height: auto;
+  min-height: calc(4rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 0.25rem);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-navigation > button {
+  min-width: 0;
+  min-height: 4rem;
+  touch-action: manipulation;
+}
