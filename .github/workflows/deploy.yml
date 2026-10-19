@@ -39,10 +39,10 @@ jobs:
       - name: Build Production Assets
         run: npm run build
 
+      # GitHub Pages must be enabled once in repository Settings > Pages.
+      # GITHUB_TOKEN cannot create a new Pages site; configure it to use GitHub Actions first.
       - name: Setup Pages
         uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
