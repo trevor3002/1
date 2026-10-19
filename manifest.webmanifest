@@ -1,23 +1,23 @@
 {
-  "id": "./",
+  "id": "https://trevor3002.github.io/1/",
   "name": "Weed Factory: Green Empire",
   "short_name": "Weed Factory",
   "description": "Build your green business empire in this idle factory tycoon game.",
-  "start_url": "./",
-  "scope": "./",
+  "start_url": "https://trevor3002.github.io/1/",
+  "scope": "https://trevor3002.github.io/1/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#090d0b",
   "theme_color": "#090d0b",
   "icons": [
     {
-      "src": "./apple-touch-icon.png",
+      "src": "https://trevor3002.github.io/1/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "./apple-touch-icon.svg",
+      "src": "https://trevor3002.github.io/1/apple-touch-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
