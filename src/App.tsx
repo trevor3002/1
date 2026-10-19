@@ -468,7 +468,7 @@ export default function App() {
   const frenzySecondsLeft = Math.max(0, Math.ceil((state.frenzyUntil - Date.now()) / 1000));
 
   return (
-    <div className="w-full h-screen bg-[#050806] flex items-center justify-center overflow-hidden">
+    <div className="game-viewport w-full bg-[#050806] flex items-center justify-center overflow-hidden">
       {/* Container wrapper: Native edge-to-edge on mobile, simulated iPhone 13 frame on desktop if viewMode is iphone */}
       <div
         className={`relative flex flex-col h-full w-full bg-[#0a0f0d] text-zinc-100 overflow-hidden shadow-2xl transition-all duration-300 ${
@@ -529,7 +529,7 @@ export default function App() {
         </header>
 
         {/* 2. MAIN ACTIVE VIEWPORT CONTENT */}
-        <main className="flex-1 overflow-y-auto no-scrollbar relative flex flex-col">
+        <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain no-scrollbar relative flex flex-col">
           {currentTab === 'factory' && (
             <div className="flex-1 flex flex-col h-full relative">
               {/* Quick Frenzy Tap Bar */}
@@ -604,13 +604,13 @@ export default function App() {
         </main>
 
         {/* 3. BOTTOM THUMB-ZONE NAVIGATION BAR */}
-        <nav className="pb-safe bg-[#0b120e]/95 backdrop-blur-md border-t border-[#1b2b20] grid grid-cols-5 h-16 shrink-0 z-30">
+        <nav className="bottom-navigation relative bg-[#0b120e]/95 backdrop-blur-md border-t border-[#1b2b20] grid grid-cols-5 shrink-0 z-30">
           <button
             onClick={() => {
               sounds.playTap();
               setCurrentTab('factory');
             }}
-            className={`flex flex-col items-center justify-center transition-colors ${
+            className={`min-h-16 touch-manipulation flex flex-col items-center justify-center transition-colors ${
               currentTab === 'factory' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'
             }`}
           >
@@ -623,7 +623,7 @@ export default function App() {
               sounds.playTap();
               setCurrentTab('production');
             }}
-            className={`flex flex-col items-center justify-center transition-colors ${
+            className={`min-h-16 touch-manipulation flex flex-col items-center justify-center transition-colors ${
               currentTab === 'production' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'
             }`}
           >
@@ -636,7 +636,7 @@ export default function App() {
               sounds.playTap();
               setCurrentTab('sales');
             }}
-            className={`flex flex-col items-center justify-center transition-colors ${
+            className={`min-h-16 touch-manipulation flex flex-col items-center justify-center transition-colors ${
               currentTab === 'sales' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'
             }`}
           >
@@ -649,7 +649,7 @@ export default function App() {
               sounds.playTap();
               setCurrentTab('upgrades');
             }}
-            className={`flex flex-col items-center justify-center transition-colors ${
+            className={`min-h-16 touch-manipulation flex flex-col items-center justify-center transition-colors ${
               currentTab === 'upgrades' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'
             }`}
           >
@@ -662,7 +662,7 @@ export default function App() {
               sounds.playTap();
               setCurrentTab('empire');
             }}
-            className={`flex flex-col items-center justify-center transition-colors ${
+            className={`min-h-16 touch-manipulation flex flex-col items-center justify-center transition-colors ${
               currentTab === 'empire' ? 'text-emerald-400 font-bold' : 'text-zinc-500 hover:text-zinc-300'
             }`}
           >
