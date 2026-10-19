@@ -1,0 +1,6 @@
+{
+  "name": "Weed Factory: Green Empire",
+  "description": "A 3D-inspired idle tycoon game where you cultivate strains, automate production lines, manage dispensary sales, and build a green business empire.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
