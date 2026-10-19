@@ -1,0 +1,19 @@
+{
+  "name": "Weed Factory: Green Empire",
+  "short_name": "Weed Factory",
+  "description": "Build your green business empire in this idle factory tycoon game.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#090d0b",
+  "theme_color": "#090d0b",
+  "icons": [
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
