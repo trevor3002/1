@@ -212,10 +212,10 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       // Zone 1: GROW ROOM (Top section)
       // Room framing & neon overhead pipe
       ctx.fillStyle = '#0f1712';
-      ctx.fillRect(20, 60, canvas.width - 40, 240);
+      ctx.fillRect(20, 60, canvas.width - 40, 320);
       ctx.strokeStyle = '#1b2d22';
       ctx.lineWidth = 2;
-      ctx.strokeRect(20, 60, canvas.width - 40, 240);
+      ctx.strokeRect(20, 60, canvas.width - 40, 320);
 
       // Neon LED Grow Light bar running across top
       const glowAlpha = 0.5 + Math.sin(pulseAnimRef.current) * 0.2;
