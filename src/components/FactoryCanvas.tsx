@@ -80,8 +80,8 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
   ]);
 
   const customersRef = useRef<CustomerAgent[]>([
-    { id: 'c1', x: 380, y: 620, targetX: 260, state: 'entering', waitTimer: 3, speechText: 'Need that gas! 🔥' },
-    { id: 'c2', x: 440, y: 620, targetX: 310, state: 'entering', waitTimer: 5, speechText: 'Top shelf only 🌿' },
+    { id: 'c1', x: 380, y: 700, targetX: 260, state: 'entering', waitTimer: 3, speechText: 'Need that gas! 🔥' },
+    { id: 'c2', x: 440, y: 700, targetX: 310, state: 'entering', waitTimer: 5, speechText: 'Top shelf only 🌿' },
   ]);
 
   const conveyorOffsetRef = useRef(0);
@@ -135,10 +135,10 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       if (!station.unlocked) return;
       const col = idx % 2;
       const row = Math.floor(idx / 2);
-      const bx = 45 + col * 175;
-      const by = 96 + row * 95;
-      const bw = 150;
-      const bh = 75;
+      const bx = 30 + col * 170;
+      const by = 100 + row * 112;
+      const bw = 160;
+      const bh = 105;
 
       if (clientX >= bx && clientX <= bx + bw && clientY >= by && clientY <= by + bh) {
         clickedStation = true;
@@ -212,10 +212,10 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       // Zone 1: GROW ROOM (Top section)
       // Room framing & neon overhead pipe
       ctx.fillStyle = '#0f1712';
-      ctx.fillRect(20, 60, canvas.width - 40, 320);
+      ctx.fillRect(20, 60, canvas.width - 40, 390);
       ctx.strokeStyle = '#1b2d22';
       ctx.lineWidth = 2;
-      ctx.strokeRect(20, 60, canvas.width - 40, 320);
+      ctx.strokeRect(20, 60, canvas.width - 40, 390);
 
       // Neon LED Grow Light bar running across top
       const glowAlpha = 0.5 + Math.sin(pulseAnimRef.current) * 0.2;
@@ -230,117 +230,141 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       ctx.font = '600 11px Outfit, sans-serif';
       ctx.fillText('ZONE 01: HYDROPONIC GROW CHAMBER', 35, 84);
 
-      // Draw Grow Station Beds
+      // Individual illustrated grow cards: larger plants, pots, status and progress
       s.growStations.forEach((station, idx) => {
         const col = idx % 2;
         const row = Math.floor(idx / 2);
-        const bx = 40 + col * 175;
-        const by = 96 + row * 95;
-        const bw = 155;
-        const bh = 80;
+        const bx = 30 + col * 170;
+        const by = 100 + row * 112;
+        const bw = 160;
+        const bh = 105;
+
+        ctx.fillStyle = '#101b14';
+        ctx.fillRect(bx, by, bw, bh);
+        ctx.fillStyle = '#14251a';
+        ctx.fillRect(bx + 3, by + 3, bw - 6, bh - 6);
+        ctx.strokeStyle = station.unlocked && station.progress >= 1 ? '#65e58a' : '#294532';
+        ctx.lineWidth = station.unlocked && station.progress >= 1 ? 2 : 1;
+        ctx.strokeRect(bx, by, bw, bh);
 
         if (!station.unlocked) {
-          // Locked Station Bed
-          ctx.fillStyle = '#090e0b';
-          ctx.fillRect(bx, by, bw, bh);
-          ctx.strokeStyle = '#1a2920';
-          ctx.strokeRect(bx, by, bw, bh);
-          ctx.fillStyle = '#4b5563';
-          ctx.font = '500 11px Outfit, sans-serif';
-          ctx.fillText(`🔒 Locked Bed`, bx + 14, by + 36);
-          ctx.font = '10px Plus Jakarta Sans, sans-serif';
-          ctx.fillText(`Cost: $${station.unlockCost.toLocaleString()}`, bx + 14, by + 52);
+          ctx.fillStyle = '#1d3022';
+          ctx.fillRect(bx + 8, by + 28, bw - 16, 59);
+          ctx.fillStyle = '#b4c6b8';
+          ctx.font = '600 11px Outfit, sans-serif';
+          ctx.fillText('🔒 LOCKED GROW BED', bx + 12, by + 49);
+          ctx.fillStyle = '#fbbf24';
+          ctx.font = '10px Outfit, sans-serif';
+          ctx.fillText(`Unlock: ${station.unlockCost.toLocaleString()}`, bx + 12, by + 67);
+          ctx.fillStyle = '#526b58';
+          ctx.fillRect(bx + 12, by + 82, bw - 24, 3);
           return;
         }
 
-        // Active Station Bed container
         const strain = STRAINS[station.strainId];
-        ctx.fillStyle = '#141e17';
-        ctx.fillRect(bx, by, bw, bh);
-        ctx.strokeStyle = station.progress >= 1.0 ? '#22c55e' : '#27382c';
-        ctx.lineWidth = station.progress >= 1.0 ? 2 : 1;
-        ctx.strokeRect(bx, by, bw, bh);
-
-        // Bed header
-        ctx.fillStyle = '#d1d5db';
-        ctx.font = '600 10px Outfit, sans-serif';
-        ctx.fillText(station.name, bx + 8, by + 16);
-
-        // Hydroponic Water tank glow at bottom
-        ctx.fillStyle = '#064e3b';
-        ctx.fillRect(bx + 8, by + bh - 16, bw - 16, 8);
-
-        // Plant Visual Graphic based on progress
+        const prog = Math.max(0, Math.min(1, station.progress));
         const px = bx + bw / 2;
-        const py = by + 48;
-        const prog = station.progress;
+        const stemBase = by + 76;
 
-        if (prog < 0.25) {
-          // Sprout stage
-          ctx.fillStyle = strain.color;
+        ctx.fillStyle = '#f0fdf4';
+        ctx.font = '600 10px Outfit, sans-serif';
+        ctx.fillText(station.name.slice(0, 22), bx + 7, by + 14);
+        ctx.fillStyle = '#8fb89a';
+        ctx.font = '8px Outfit, sans-serif';
+        ctx.fillText(strain.name.slice(0, 21), bx + 7, by + 25);
+
+        const spotlight = ctx.createRadialGradient(px, by + 54, 2, px, by + 54, 38);
+        spotlight.addColorStop(0, station.progress >= 1 ? 'rgba(74,222,128,0.22)' : 'rgba(45,120,68,0.16)');
+        spotlight.addColorStop(1, 'rgba(10,20,13,0)');
+        ctx.fillStyle = spotlight;
+        ctx.fillRect(bx + 35, by + 28, 90, 55);
+
+        if (prog > 0) {
+          const plantHeight = 10 + prog * 31;
+          const topY = stemBase - plantHeight;
+          ctx.strokeStyle = '#4b9b59';
+          ctx.lineWidth = 3;
+          ctx.lineCap = 'round';
           ctx.beginPath();
-          ctx.arc(px, py + 8, 4, 0, Math.PI * 2);
-          ctx.fill();
-          // Small stem
-          ctx.strokeStyle = '#15803d';
-          ctx.lineWidth = 2;
-          ctx.beginPath();
-          ctx.moveTo(px, py + 14);
-          ctx.lineTo(px, py + 6);
+          ctx.moveTo(px, stemBase - 3);
+          ctx.quadraticCurveTo(px - 2, stemBase - plantHeight * 0.55, px, topY);
           ctx.stroke();
-        } else if (prog < 0.75) {
-          // Vegetative leafy bush
-          ctx.fillStyle = '#15803d';
-          ctx.beginPath();
-          ctx.arc(px - 8, py + 2, 7, 0, Math.PI * 2);
-          ctx.arc(px + 8, py + 2, 7, 0, Math.PI * 2);
-          ctx.arc(px, py - 4, 9, 0, Math.PI * 2);
-          ctx.fill();
+
+          ctx.fillStyle = prog >= 0.75 ? '#48bd68' : '#369653';
+          ctx.strokeStyle = '#1f6d3b';
+          ctx.lineWidth = 1;
+          const leaf = (y: number, dir: number, size: number) => {
+            ctx.beginPath();
+            ctx.moveTo(px, y);
+            ctx.quadraticCurveTo(px + dir * size * 0.4, y - size * 0.8, px + dir * size, y - size * 0.25);
+            ctx.quadraticCurveTo(px + dir * size * 0.72, y + size * 0.45, px, y);
+            ctx.fill();
+            ctx.stroke();
+          };
+          leaf(topY + plantHeight * 0.55, -1, 15 + prog * 7);
+          leaf(topY + plantHeight * 0.62, 1, 15 + prog * 7);
+          if (prog > 0.25) {
+            leaf(topY + plantHeight * 0.25, -1, 11 + prog * 6);
+            leaf(topY + plantHeight * 0.33, 1, 11 + prog * 6);
+          }
+          if (prog > 0.55) {
+            leaf(topY + 4, -1, 9);
+            leaf(topY + 7, 1, 9);
+          }
+          if (prog >= 0.75) {
+            ctx.fillStyle = strain.color || '#a7e66b';
+            ctx.shadowColor = strain.color || '#a7e66b';
+            ctx.shadowBlur = station.progress >= 1 ? 8 : 3;
+            ctx.beginPath();
+            ctx.arc(px, topY - 2, 5, 0, Math.PI * 2);
+            ctx.arc(px - 5, topY + 3, 4, 0, Math.PI * 2);
+            ctx.arc(px + 5, topY + 3, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = '#ecfccb';
+            ctx.fillRect(px - 1, topY - 3, 2, 2);
+            ctx.fillRect(px + 4, topY + 2, 2, 2);
+          }
         } else {
-          // Full Flowering Colas with glowing trichomes!
-          ctx.fillStyle = strain.color;
-          ctx.shadowColor = strain.color;
-          ctx.shadowBlur = station.progress >= 1.0 ? 10 : 4;
-
+          ctx.fillStyle = '#78b85b';
           ctx.beginPath();
-          ctx.arc(px - 10, py, 9, 0, Math.PI * 2);
-          ctx.arc(px + 10, py, 9, 0, Math.PI * 2);
-          ctx.arc(px, py - 8, 12, 0, Math.PI * 2);
+          ctx.ellipse(px - 4, stemBase - 4, 6, 3, -0.5, 0, Math.PI * 2);
+          ctx.ellipse(px + 4, stemBase - 4, 6, 3, 0.5, 0, Math.PI * 2);
           ctx.fill();
-          ctx.shadowBlur = 0;
-
-          // Sparkling trichome dots
-          ctx.fillStyle = '#ffffff';
-          ctx.fillRect(px - 4, py - 6, 2, 2);
-          ctx.fillRect(px + 3, py - 3, 2, 2);
-          ctx.fillRect(px, py, 2, 2);
         }
 
-        // Progress Bar
-        const barW = bw - 16;
-        const barH = 5;
+        // Small terracotta pot makes each station read as its own plant
+        ctx.fillStyle = '#563b2a';
+        ctx.fillRect(px - 14, by + 75, 28, 11);
+        ctx.fillStyle = '#b86d42';
+        ctx.beginPath();
+        ctx.moveTo(px - 16, by + 72);
+        ctx.lineTo(px + 16, by + 72);
+        ctx.lineTo(px + 12, by + 87);
+        ctx.lineTo(px - 12, by + 87);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = '#e7a16a';
+        ctx.fillRect(px - 16, by + 71, 32, 3);
+        ctx.fillStyle = '#39291f';
+        ctx.fillRect(px - 12, by + 75, 24, 2);
+
         const barX = bx + 8;
-        const barY = by + bh - 12;
-        ctx.fillStyle = '#1f2937';
-        ctx.fillRect(barX, barY, barW, barH);
+        const barY = by + 96;
+        const barW = bw - 16;
+        ctx.fillStyle = '#26372b';
+        ctx.fillRect(barX, barY, barW, 4);
+        ctx.fillStyle = station.progress >= 1 ? '#4ade80' : strain.color || '#38bdf8';
+        ctx.fillRect(barX, barY, barW * prog, 4);
 
-        ctx.fillStyle = station.progress >= 1.0 ? '#22c55e' : strain.color;
-        ctx.fillRect(barX, barY, barW * station.progress, barH);
-
-        // Status badge
-        if (station.progress >= 1.0) {
-          ctx.fillStyle = '#4ade80';
-          ctx.font = 'bold 9px Outfit, sans-serif';
-          ctx.fillText('TAP TO HARVEST! ✂️', bx + 10, by + 30);
-        } else if (!station.isGrowing) {
-          ctx.fillStyle = '#9ca3af';
-          ctx.font = '9px Outfit, sans-serif';
-          ctx.fillText('TAP TO PLANT 🌱', bx + 10, by + 30);
-        }
+        ctx.fillStyle = station.progress >= 1 ? '#86efac' : !station.isGrowing ? '#b9d8c0' : '#d1d5db';
+        ctx.font = 'bold 8px Outfit, sans-serif';
+        const status = station.progress >= 1 ? 'READY • TAP TO HARVEST' : !station.isGrowing ? 'TAP TO PLANT' : `GROWING • ${Math.round(prog * 100)}%`;
+        ctx.fillText(status, bx + 8, by + 91);
       });
 
       // Zone 2: PROCESSING & PACKAGING LAB (Middle section)
-      const labY = 390;
+      const labY = 465;
       ctx.fillStyle = '#0c1310';
       ctx.fillRect(20, labY, canvas.width - 40, 155);
       ctx.strokeStyle = '#1b2d22';
@@ -446,7 +470,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       ctx.fillRect(px + 8, py + ph - 12, (pw - 16) * pack.progress, 5);
 
       // Zone 3: RETAIL DISPENSARY & SALES COUNTER (Bottom section)
-      const salesY = 560;
+      const salesY = 640;
       ctx.fillStyle = '#0b120e';
       ctx.fillRect(20, salesY, canvas.width - 40, 160);
       ctx.strokeStyle = '#1b2d22';
@@ -616,14 +640,14 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-auto min-h-[760px] flex-none flex items-start justify-center bg-[#070b09] overflow-hidden select-none"
+      className="relative w-full h-auto min-h-[820px] flex-none flex items-start justify-center bg-[#070b09] overflow-hidden select-none"
     >
       <canvas
         ref={canvasRef}
         width={390}
-        height={760}
+        height={820}
         onPointerDown={handlePointerDown}
-        className="w-full max-w-[390px] h-auto aspect-[390/760] shadow-2xl cursor-pointer touch-pan-y block"
+        className="w-full max-w-[390px] h-auto aspect-[390/820] shadow-2xl cursor-pointer touch-pan-y block"
       />
     </div>
   );
