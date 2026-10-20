@@ -623,7 +623,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
         width={390}
         height={760}
         onPointerDown={handlePointerDown}
-        className="w-full max-w-[390px] h-auto aspect-[390/760] shadow-2xl cursor-pointer touch-none block"
+        className="w-full max-w-[390px] h-auto aspect-[390/760] shadow-2xl cursor-pointer touch-pan-y block"
       />
     </div>
   );
