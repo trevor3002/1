@@ -616,7 +616,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-auto min-h-[760px] flex items-start justify-center bg-[#070b09] overflow-hidden select-none"
+      className="relative w-full h-auto min-h-[760px] flex-none flex items-start justify-center bg-[#070b09] overflow-hidden select-none"
     >
       <canvas
         ref={canvasRef}
