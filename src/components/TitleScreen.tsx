@@ -68,9 +68,22 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
           <span>GREEN EMPIRE</span>
           <span>—</span>
         </div>
-        <p className="text-xs text-zinc-400 leading-relaxed max-w-xs mb-8">
-          Cultivate exotic strains, automate high-tech processing lines, manage dispensary sales, and establish a multi-million dollar green dynasty.
-        </p>
+        <div className="w-full max-w-xs mb-7 rounded-2xl border border-emerald-500/25 bg-[#0c1510]/90 p-4 text-left shadow-lg shadow-emerald-950/20">
+          <div className="text-[10px] font-extrabold tracking-[0.22em] text-emerald-400 uppercase mb-2 flex items-center gap-2">
+            <Sparkles className="w-3.5 h-3.5" />
+            The story begins
+          </div>
+          <h2 className="text-sm font-extrabold text-white mb-2">ONE SMALL ROOM. ONE BIG DREAM.</h2>
+          <p className="text-xs text-zinc-300 leading-relaxed">
+            You start with an empty room, a little cash, and a dream to build something legendary. Nobody knows your name — yet.
+          </p>
+          <p className="text-xs text-zinc-400 leading-relaxed mt-2">
+            Grow your first plants, turn a tiny operation into a high-tech factory, hire your crew, and build a business that reaches far beyond the city.
+          </p>
+          <p className="text-xs text-emerald-300 font-semibold leading-relaxed mt-2">
+            Every machine, every upgrade, every dollar brings you closer to one goal: build the Green Empire.
+          </p>
+        </div>
 
         {/* Action Buttons */}
         <div className="w-full flex flex-col gap-3">
