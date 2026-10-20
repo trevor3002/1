@@ -17,6 +17,51 @@ interface ProductionTabProps {
   onUnlockPackaging: (lineId: string) => void;
 }
 
+/** Small, stylised tycoon-game plant illustration; visual stage follows live grow progress. */
+const PlantIllustration: React.FC<{ progress: number; color: string; ready: boolean }> = ({ progress, color, ready }) => {
+  const stage = progress >= 0.8 ? 3 : progress >= 0.45 ? 2 : progress > 0 ? 1 : 0;
+  const leaf = color || '#45c96b';
+  return (
+    <div className="relative h-[112px] w-full overflow-hidden rounded-xl border border-emerald-900/70 bg-gradient-to-b from-[#132b20] via-[#10251b] to-[#0a1711]">
+      <div className="absolute inset-x-0 bottom-0 h-8 bg-gradient-to-t from-[#263c27] to-[#263c27]/0" />
+      <div className="absolute left-3 top-3 h-1.5 w-1.5 rounded-full bg-emerald-200/70" />
+      <div className="absolute right-5 top-5 h-1 w-1 rounded-full bg-lime-200/60" />
+      <svg viewBox="0 0 160 112" className="relative h-full w-full" role="img" aria-label={ready ? "Mature plant ready to harvest" : stage === 0 ? "Empty growing pot" : "Growing plant"}>
+        <ellipse cx="80" cy="96" rx="38" ry="7" fill="#050b08" opacity=".45" />
+        {stage > 0 && (
+          <g stroke="#277747" strokeWidth="4" strokeLinecap="round" fill="none">
+            <path d={stage === 1 ? "M80 79 Q79 65 80 52" : stage === 2 ? "M80 82 Q78 57 80 31" : "M80 83 Q78 48 80 20"} />
+          </g>
+        )}
+        {stage >= 1 && <g fill={leaf} stroke="#1c6a3b" strokeWidth="1.5" strokeLinejoin="round">
+          <path d="M79 67 Q54 62 49 43 Q69 45 79 67Z" />
+          <path d="M81 61 Q105 55 111 37 Q91 40 81 61Z" />
+          {stage >= 2 && <>
+            <path d="M79 51 Q54 45 56 26 Q73 31 79 51Z" />
+            <path d="M82 45 Q103 38 103 20 Q87 25 82 45Z" />
+            <path d="M79 35 Q64 25 71 12 Q81 20 79 35Z" />
+          </>}
+          {stage >= 3 && <>
+            <path d="M72 43 Q42 39 40 19 Q62 23 72 43Z" />
+            <path d="M88 39 Q119 32 121 13 Q99 20 88 39Z" />
+            <path d="M80 28 Q72 16 80 7 Q88 17 80 28Z" />
+          </>}
+        </g>}
+        {stage >= 3 && <g fill="#a7e66b" stroke="#e0ff9b" strokeWidth=".8">
+          <circle cx="73" cy="32" r="4" /><circle cx="87" cy="29" r="4" /><circle cx="80" cy="20" r="4" />
+        </g>}
+        <path d="M52 77 L108 77 L101 101 Q80 107 59 101Z" fill="#a85f38" stroke="#e7a16a" strokeWidth="2" />
+        <path d="M55 79 L105 79" stroke="#f1b17d" strokeWidth="3" strokeLinecap="round" />
+        <path d="M61 86 L99 86" stroke="#7b4028" strokeWidth="2" opacity=".7" />
+        {stage === 0 && <g fill="#8cbd60"><path d="M76 77 Q70 67 62 72 Q68 80 76 77Z"/><path d="M83 77 Q90 66 98 72 Q92 80 83 77Z"/></g>}
+      </svg>
+      <span className="absolute bottom-2 right-2 rounded-md border border-white/10 bg-black/50 px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider text-emerald-200">
+        {ready ? 'Ready!' : stage === 0 ? 'Seedling' : stage === 1 ? 'Sprout' : stage === 2 ? 'Growing' : 'Flowering'}
+      </span>
+    </div>
+  );
+};
+
 export const ProductionTab: React.FC<ProductionTabProps> = ({
   state,
   onPlant,
@@ -67,7 +112,7 @@ export const ProductionTab: React.FC<ProductionTabProps> = ({
           </span>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {state.growStations.map((station) => {
             const strain = STRAINS[station.strainId];
             const growTime = calculateGrowDuration(
@@ -132,18 +177,16 @@ export const ProductionTab: React.FC<ProductionTabProps> = ({
                     </select>
                   </div>
 
-                  <div className="flex items-center gap-3 my-2 bg-black/30 p-2.5 rounded-xl">
-                    <span className="text-2xl">{strain.icon}</span>
-                    <div className="flex-1">
-                      <div className="flex items-center justify-between text-xs">
-                        <span className="font-semibold" style={{ color: strain.color }}>
-                          {strain.name}
-                        </span>
-                        <span className="text-zinc-400">{growTime.toFixed(1)}s cycle</span>
-                      </div>
-                      <div className="text-[11px] text-zinc-400">
-                        Yield: <span className="text-emerald-400 font-semibold">{yieldAmount}g</span> raw bud
-                      </div>
+                  <div className="my-2 rounded-xl bg-black/20 p-1.5">
+                    <PlantIllustration progress={station.progress} color={strain.color} ready={station.progress >= 1.0} />
+                    <div className="flex items-center justify-between gap-1 px-1 pt-2 text-xs">
+                      <span className="min-w-0 truncate font-semibold" style={{ color: strain.color }}>
+                        {strain.icon} {strain.name}
+                      </span>
+                      <span className="shrink-0 text-[10px] text-zinc-400">{growTime.toFixed(1)}s</span>
+                    </div>
+                    <div className="px-1 pb-1 pt-1 text-[11px] text-zinc-400">
+                      Yield <span className="font-bold text-emerald-400">{yieldAmount}g</span> raw bud
                     </div>
                   </div>
 
