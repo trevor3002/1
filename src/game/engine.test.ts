@@ -15,8 +15,8 @@ import { INITIAL_GAME_STATE } from './constants.ts';
 
 test('calculateMaxStorage increases with storage upgrades', () => {
   assert.equal(calculateMaxStorage({}), 500);
-  assert.equal(calculateMaxStorage({ upg_curing_jars: 2 }), 1000);
-  assert.equal(calculateMaxStorage({ upg_curing_jars: 4 }), 1500);
+  assert.equal(calculateMaxStorage({ upg_curing_jars: 2 }), 1300);
+  assert.equal(calculateMaxStorage({ upg_curing_jars: 4 }), 2100);
 });
 
 test('calculateCurrentStorageWeight sums raw, processed, and packaged goods', () => {
