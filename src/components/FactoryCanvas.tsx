@@ -456,12 +456,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
         }
       }
 
-      // Moving jar box on conveyor
-      const boxX = px + 12 + ((offset * 3.5) % (pw - 40));
-      ctx.fillStyle = '#22c55e';
-      ctx.fillRect(boxX, py + 42, 14, 14);
-      ctx.strokeStyle = '#ffffff';
-      ctx.strokeRect(boxX, py + 42, 14, 14);
+      // Conveyor remains clear; no floating product sprites.
 
       // Packaging progress
       ctx.fillStyle = '#1f2937';
@@ -532,61 +527,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       ctx.font = 'bold 9px Outfit, sans-serif';
       ctx.fillText('SALES', regX + 80, regY + 25);
 
-      // Animate Workers
-      workersRef.current.forEach((w) => {
-        // Simple ambient worker pacing
-        w.timer -= dt;
-        if (w.timer <= 0) {
-          w.timer = 2 + Math.random() * 3;
-          w.targetX = w.x > 200 ? 120 + Math.random() * 50 : 250 + Math.random() * 50;
-        }
-        w.x += (w.targetX - w.x) * dt * 0.8;
-
-        // Draw worker icon
-        ctx.font = '16px sans-serif';
-        ctx.fillText(w.avatar, w.x, w.y);
-      });
-
-      // Animate Customers approaching counter
-      customersRef.current.forEach((c) => {
-        if (c.state === 'entering') {
-          c.x += (c.targetX - c.x) * dt * 1.5;
-          if (Math.abs(c.x - c.targetX) < 5) {
-            c.state = 'waiting';
-            c.waitTimer = 3;
-          }
-        } else if (c.state === 'waiting') {
-          c.waitTimer -= dt;
-          if (c.waitTimer <= 0) {
-            c.state = 'leaving';
-            c.targetX = 420;
-          }
-        } else if (c.state === 'leaving') {
-          c.x += (c.targetX - c.x) * dt * 2.0;
-          if (c.x > 400) {
-            c.x = 420;
-            c.targetX = 260 + Math.random() * 40;
-            c.state = 'entering';
-            const quotes = ['Fire strain! 🔥', 'Take my cash! 💵', 'Best dispensary! 🌿', '5 stars! ⭐️'];
-            c.speechText = quotes[Math.floor(Math.random() * quotes.length)];
-          }
-        }
-
-        // Draw customer figure
-        ctx.font = '16px sans-serif';
-        ctx.fillText('🚶', c.x, c.y);
-
-        // Speech bubble
-        if (c.state === 'waiting' && c.speechText) {
-          ctx.fillStyle = 'rgba(17, 24, 39, 0.9)';
-          ctx.fillRect(c.x - 25, c.y - 28, 70, 16);
-          ctx.strokeStyle = '#4ade80';
-          ctx.strokeRect(c.x - 25, c.y - 28, 70, 16);
-          ctx.fillStyle = '#86efac';
-          ctx.font = '9px Outfit, sans-serif';
-          ctx.fillText(c.speechText, c.x - 22, c.y - 17);
-        }
-      });
+      // Ambient worker and customer sprites are intentionally hidden for a clean factory view.
 
       // Update & Draw Particles
       for (let i = particlesRef.current.length - 1; i >= 0; i--) {
