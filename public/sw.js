@@ -1,4 +1,4 @@
-const CACHE_NAME = 'weed-factory-shell-v6';
+const CACHE_NAME = 'weed-factory-shell-v7';
 const APP_URL = new URL('./', self.registration.scope).href;
 
 self.addEventListener('install', (event) => {
@@ -12,6 +12,10 @@ self.addEventListener('install', (event) => {
     }
     await self.skipWaiting();
   })());
+});
+
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -31,7 +35,7 @@ self.addEventListener('fetch', (event) => {
 
   event.respondWith((async () => {
     try {
-      const response = await fetch(request);
+      const response = await fetch(request, { cache: 'no-cache' });
       if (response.ok && response.type === 'basic') {
         const cache = await caches.open(CACHE_NAME);
         await cache.put(request, response.clone());
