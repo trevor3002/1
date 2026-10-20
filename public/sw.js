@@ -1,4 +1,4 @@
-const CACHE_NAME = 'weed-factory-shell-v5';
+const CACHE_NAME = 'weed-factory-shell-v6';
 const APP_URL = new URL('./', self.registration.scope).href;
 
 self.addEventListener('install', (event) => {
