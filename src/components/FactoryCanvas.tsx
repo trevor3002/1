@@ -136,7 +136,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       const col = idx % 2;
       const row = Math.floor(idx / 2);
       const bx = 45 + col * 175;
-      const by = 130 + row * 95;
+      const by = 96 + row * 95;
       const bw = 150;
       const bh = 75;
 
@@ -340,7 +340,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       });
 
       // Zone 2: PROCESSING & PACKAGING LAB (Middle section)
-      const labY = 315;
+      const labY = 390;
       ctx.fillStyle = '#0c1310';
       ctx.fillRect(20, labY, canvas.width - 40, 155);
       ctx.strokeStyle = '#1b2d22';
@@ -446,7 +446,7 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
       ctx.fillRect(px + 8, py + ph - 12, (pw - 16) * pack.progress, 5);
 
       // Zone 3: RETAIL DISPENSARY & SALES COUNTER (Bottom section)
-      const salesY = 485;
+      const salesY = 560;
       ctx.fillStyle = '#0b120e';
       ctx.fillRect(20, salesY, canvas.width - 40, 160);
       ctx.strokeStyle = '#1b2d22';
@@ -616,14 +616,14 @@ export const FactoryCanvas: React.FC<FactoryCanvasProps> = ({
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full flex items-center justify-center bg-[#070b09] overflow-hidden select-none"
+      className="relative w-full h-auto min-h-[760px] flex items-start justify-center bg-[#070b09] overflow-hidden select-none"
     >
       <canvas
         ref={canvasRef}
         width={390}
-        height={680}
+        height={760}
         onPointerDown={handlePointerDown}
-        className="w-full max-w-[390px] h-auto aspect-[390/680] shadow-2xl cursor-pointer touch-none block"
+        className="w-full max-w-[390px] h-auto aspect-[390/760] shadow-2xl cursor-pointer touch-none block"
       />
     </div>
   );
