@@ -48,7 +48,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({ onStartGame, hasExisti
           <button onClick={finish} className="text-[10px] font-bold text-zinc-400 hover:text-white flex items-center gap-1 px-2 py-2">SKIP <SkipForward className="w-3 h-3" /></button>
         </div>
       </header>
-      <main className="relative z-10 flex-1 min-h-0 flex flex-col justify-center px-4 pb-3">
+      <main className="relative z-10 flex-1 min-h-0 flex flex-col justify-center px-4 pb-3 overflow-y-auto">
         <div className={`relative w-full max-w-xl mx-auto overflow-hidden rounded-3xl border border-emerald-400/25 bg-gradient-to-br ${current.scene} shadow-2xl shadow-emerald-950/50`}>
           <div className="relative min-h-[34vh] sm:min-h-[360px] flex flex-col items-center justify-center text-center p-5 sm:p-8 overflow-hidden">
             <div className="absolute inset-0 opacity-20" style={{backgroundImage:'radial-gradient(circle at 20% 25%, #a3e635 0 1px, transparent 2px), radial-gradient(circle at 75% 65%, #34d399 0 1px, transparent 2px)', backgroundSize:'36px 36px'}} />
@@ -61,7 +61,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({ onStartGame, hasExisti
           </div>
           <div className="h-1 bg-black/40"><div className="h-full bg-emerald-400 transition-all duration-300" style={{width: `${((chapter + 1) / chapters.length) * 100}%`}} /></div>
         </div>
-        <div className="w-full max-w-xl mx-auto mt-4">
+        <div className="w-full max-w-xl mx-auto mt-4 pb-2">
           <div className="flex justify-center gap-2 mb-4" aria-label={`Story page ${chapter + 1} of ${chapters.length}`}>
             {chapters.map((item, i) => <button key={item.kicker} onClick={() => setChapter(i)} aria-label={`Go to chapter ${i + 1}`} className={`h-2 rounded-full transition-all ${i === chapter ? 'w-7 bg-emerald-400' : 'w-2 bg-white/25 hover:bg-white/50'}`} />)}
           </div>
