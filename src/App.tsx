@@ -547,7 +547,7 @@ export default function App() {
               </div>
 
               {/* Live Canvas Viewport */}
-              <div className="flex-1 w-full h-full min-h-[520px] overflow-y-auto no-scrollbar">
+              <div className="flex-1 w-full h-full min-h-[760px] overflow-y-auto no-scrollbar">
                 <FactoryCanvas
                   state={state}
                   onHarvestStation={handleHarvestStation}
