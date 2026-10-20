@@ -531,7 +531,7 @@ export default function App() {
         {/* 2. MAIN ACTIVE VIEWPORT CONTENT */}
         <main className="min-h-0 flex-1 overflow-y-auto overscroll-contain no-scrollbar relative flex flex-col">
           {currentTab === 'factory' && (
-            <div className="flex-1 flex flex-col h-full relative">
+            <div className="flex-none flex flex-col w-full h-auto min-h-0 relative">
               {/* Quick Frenzy Tap Bar */}
               <div className="px-4 py-2 bg-[#0c130f] border-b border-[#1b2b20] flex items-center justify-between z-10 shrink-0">
                 <span className="text-[11px] text-zinc-400 truncate mr-2">
@@ -547,7 +547,7 @@ export default function App() {
               </div>
 
               {/* Live Canvas Viewport */}
-              <div className="flex-1 w-full h-full min-h-[760px] overflow-y-auto no-scrollbar">
+              <div className="w-full h-auto min-h-0 flex-none overflow-visible">
                 <FactoryCanvas
                   state={state}
                   onHarvestStation={handleHarvestStation}
