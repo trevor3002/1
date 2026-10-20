@@ -16,7 +16,7 @@ import {
  * Calculates current maximum storage capacity in grams based on upgrades.
  */
 export function calculateMaxStorage(upgrades: Record<string, number>): number {
-  const baseCapacity = 500;
+  const baseCapacity = 1500;
   const vaultLevel = upgrades['upg_curing_jars'] || 0;
   return baseCapacity + vaultLevel * 250;
 }
